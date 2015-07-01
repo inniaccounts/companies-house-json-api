@@ -1,4 +1,4 @@
-# CHJsonAPI - Companies House JSON Api Gem
+# CHJsonAPI <br> Companies House JSON API Gem
 
 Ruby Gem to help make requests to <a href="https://developer.companieshouse.gov.uk/api/docs/" title="Companies House">Companies House</a> public API.
 
@@ -28,43 +28,41 @@ Or install it yourself as:
 
 ###Require
 
-Add
+Add this line to files where the Gem will be used.
 
 ```ruby
-    require 'ch_json_api'
+require 'ch_json_api'
 ```
-
-To files where the Gem will be used.
 
 ###Companies House API Key
 
-To use Companies House API, you need to configure an API Key, which you can obtain from <a href="https://developer.companieshouse.gov.uk/api/docs/index/gettingStarted/apikey_authorisation.html" title="Companies House Authentication API key"> their website</a>.
+To use Companies House API, you need to configure an API Key, which you can obtain from <a target="_blank" href="https://developer.companieshouse.gov.uk/api/docs/index/gettingStarted/apikey_authorisation.html" title="Companies House Authentication API key"> their website</a>.
 
 Before making any requests, you need to initialise the Gem by calling
 
 ```ruby
-    CHJsonAPI.init "YOUR_API_KEY"
+CHJsonAPI.init "YOUR_API_KEY"
 ```
 
-###Querying for <a href="https://developer.companieshouse.gov.uk/api/docs/company/company_number/company_number.html" title="Company Profile">Company profile</a>
+###Querying for <a target="_blank" href="https://developer.companieshouse.gov.uk/api/docs/company/company_number/company_number.html" title="Company Profile">Company profile</a>
 
 ```ruby
-    json = CHJsonAPI::Company.profile 'COMPANY_NUMBER'
-    puts json['company_number']
+json = CHJsonAPI::Company.profile 'COMPANY_NUMBER'
+puts json['company_number']
 ```
 
-###Querying for <a href="https://developer.companieshouse.gov.uk/api/docs/company/company_number/registered-office-address/registered-office-address.html" title="Company Registered Office Address">Company Registered Office Address</a>
+###Querying for <a target="_blank" href="https://developer.companieshouse.gov.uk/api/docs/company/company_number/registered-office-address/registered-office-address.html" title="Company Registered Office Address">Company Registered Office Address</a>
 
 ```ruby
-    json = CHJsonAPI::Company.registered_office 'COMPANY_NUMBER'
-    puts json['locality']
+json = CHJsonAPI::Company.registered_office 'COMPANY_NUMBER'
+puts json['locality']
 ```
 
-###Querying for <a href="https://developer.companieshouse.gov.uk/api/docs/company/company_number/officers/officers.html" title="Company Officers List">Company Officers List</a>
+###Querying for <a target="_blank" href="https://developer.companieshouse.gov.uk/api/docs/company/company_number/officers/officers.html" title="Company Officers List">Company Officers List</a>
 
 ```ruby
-    json = CHJsonAPI::Company.officers 'COMPANY_NUMBER'
-    puts json['items'][0]['address']['premises']
+json = CHJsonAPI::Company.officers 'COMPANY_NUMBER'
+puts json['items'][0]['address']['premises']
 ```
 
 
