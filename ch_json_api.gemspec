@@ -5,12 +5,13 @@ require 'ch_json_api/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "ch_json_api"
-  spec.version       = ChJsonApi::VERSION
+  spec.version       = CHJsonAPI::VERSION
   spec.authors       = ["Matheus Serpellone"]
   spec.email         = ["m.serpellone@gmail.com"]
 
-  spec.summary       = %q{Gem for API calls to Companies House JSON API}
-  spec.description   = %q{Gem for API calls to Companies House JSON API}
+
+  spec.summary       = %q{Gem to assist on calls to Companies House JSON API}
+  spec.description   = %q{Companies House JSON API gem}
   spec.homepage      = "TODO: Put your gem's website or public repo URL here."
   spec.license       = "MIT"
 
@@ -29,5 +30,9 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec"
+  spec.add_development_dependency "rspec", "~> 3.3"
+
+  spec.add_dependency "curb", "~> 0.8"
+  spec.add_dependency "json", "~> 1.8"
+
 end
