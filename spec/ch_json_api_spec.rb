@@ -3,6 +3,11 @@ require 'json'
 
 describe CHJsonAPI do
 
+  let(:key) {
+    f = File.open(File.dirname(__FILE__)+'/../api_key.txt','r')
+    f.read
+  }
+
   it 'has a version number' do
     expect(CHJsonAPI::VERSION).not_to be nil
   end
@@ -18,7 +23,7 @@ describe CHJsonAPI do
   describe 'Company#profile' do
 
     before :each do
-      CHJsonAPI.init '***REMOVED***'
+      CHJsonAPI.init key
     end
 
     it 'should search for a company and return correct data ' do
@@ -69,7 +74,7 @@ describe CHJsonAPI do
   describe 'Company#registered_address' do
 
     before :each do
-      CHJsonAPI.init '***REMOVED***'
+      CHJsonAPI.init key
     end
 
     it 'should search for the registered office and return correct data ' do
@@ -97,7 +102,7 @@ describe CHJsonAPI do
   describe 'Company#officers' do
 
     before :each do
-      CHJsonAPI.init '***REMOVED***'
+      CHJsonAPI.init key
     end
 
     it 'should search for the officers and return correct data ' do
@@ -174,7 +179,7 @@ describe CHJsonAPI do
   describe 'Company#filing_list' do
 
     before :each do
-      CHJsonAPI.init '***REMOVED***'
+      CHJsonAPI.init key
     end
 
     it 'should list the filing history of a single company' do

@@ -2,6 +2,10 @@
 
 Ruby Gem to help make requests to <a href="https://developer.companieshouse.gov.uk/api/docs/" title="Companies House">Companies House</a> public API.
 
+Version 0.2.1:
+ - Removing CH Api key
+ - Changing version on Gemspec file
+
 Version 0.2.0:
  - Changed basic API. No longer accepts a single String as parameter. A named hash must always be provided to the functions.
  - Added optional parameters to the officers request.
