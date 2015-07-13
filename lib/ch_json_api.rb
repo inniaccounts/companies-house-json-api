@@ -12,10 +12,16 @@ class CHJsonAPI
   end
 
 
-  def self.api_call(handler, type)
+  def self.api_call(handler, query, type)
     raise "Uninitialised API. Call ChJsonApi.init(key) with your Companies House API key before running any requests" if @key == nil || @key.empty?
 
-    c = Curl::Easy.new("https://api.companieshouse.gov.uk/#{handler}")
+    if query.nil?
+      query = ''
+    else
+      query = "?#{query.join '&'}"
+    end
+
+    c = Curl::Easy.new("https://api.companieshouse.gov.uk/#{handler}#{query}")
 
     c.username = "#{@key}:"
     c.http_auth_types = :basic
