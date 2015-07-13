@@ -4,7 +4,7 @@ require 'json'
 require_relative 'ch_json_api/company'
 
 class CHJsonAPI
-  # curl -XGET -u ***REMOVED***: https://api.companieshouse.gov.uk/company/00000006
+  # curl -XGET -u KEY: https://api.companieshouse.gov.uk/company/00000006
 
 
   def self.init key
