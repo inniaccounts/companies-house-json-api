@@ -5,7 +5,9 @@ describe CHJsonAPI do
 
   let(:key) {
     f = File.open(File.dirname(__FILE__)+'/../api_key.txt','r')
-    f.read
+    key = f.read
+    raise 'Create a file api_key.txt on the project root with your key in it.' if key.nil? || key.empty?
+    key
   }
 
   it 'has a version number' do
