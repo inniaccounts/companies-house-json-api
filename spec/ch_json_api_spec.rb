@@ -56,7 +56,6 @@ describe CHJsonAPI do
       expect(company['etag']).to_not be_nil
       expect(company['has_charges']).to eq true
       expect(company['can_file']).to eq true
-
     end
 
     it 'should handle injections and invalid data' do
