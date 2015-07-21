@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'ch_json_api/version'
+require 'chjsonapi/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "ch_json_api"
-  spec.version       = CHJsonAPI::VERSION
+  spec.name          = "chjsonapi"
+  spec.version       = Chjsonapi::VERSION
   spec.authors       = ["Matheus Serpellone"]
   spec.email         = ["m.serpellone@gmail.com"]
 

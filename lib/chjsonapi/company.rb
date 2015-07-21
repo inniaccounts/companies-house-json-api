@@ -1,31 +1,31 @@
 
-class CHJsonAPI
+class Chjsonapi
   #Subclass of CHJsonApi that handles requests about the Company
   class Company
 
     def self.profile(param_hash)
       req, _ = validate_param_hash param_hash, [:company_number]
-      CHJsonAPI.api_call("company/#{req[:company_number]}", nil)
+      Chjsonapi.api_call("company/#{req[:company_number]}", nil)
     end
 
     def self.registered_office(param_hash)
       req, _ = validate_param_hash param_hash, [:company_number]
-      CHJsonAPI.api_call("company/#{req[:company_number]}/registered-office-address", nil)
+      Chjsonapi.api_call("company/#{req[:company_number]}/registered-office-address", nil)
     end
 
     def self.officers(param_hash)
       req, opt = validate_param_hash param_hash, [:company_number], [:items_per_page,:start_index,:order_by]
-      CHJsonAPI.api_call("company/#{req[:company_number]}/officers", opt)
+      Chjsonapi.api_call("company/#{req[:company_number]}/officers", opt)
     end
 
     def self.filing_item(param_hash)
       req, _ = validate_param_hash param_hash, [:company_number, :transaction_id]
-      CHJsonAPI.api_call("company/#{req[:company_number]}/filing-history/#{req[:transaction_id]}", nil)
+      Chjsonapi.api_call("company/#{req[:company_number]}/filing-history/#{req[:transaction_id]}", nil)
     end
 
     def self.filing_list(param_hash)
       req, opt = validate_param_hash param_hash, [:company_number], [:items_per_page,:start_index,:category]
-      CHJsonAPI.api_call("company/#{req[:company_number]}/filing-history", opt)
+      Chjsonapi.api_call("company/#{req[:company_number]}/filing-history", opt)
     end
 
 

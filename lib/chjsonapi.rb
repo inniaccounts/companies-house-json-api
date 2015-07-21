@@ -1,13 +1,13 @@
-require "ch_json_api/version"
+require "chjsonapi/version"
 require 'curb'
 require 'json'
-require_relative 'ch_json_api/company'
+require_relative 'chjsonapi/company'
 
 # Base class for the CH Json Api
 # Can be used to make direct API calls to Companies House domain
 # The extended classes should implement specific methods to interface with api_call by providing the appropriate
 # URL handles, querystrings and request types
-class CHJsonAPI
+class Chjsonapi
 
   #Call this before using any other method
   def self.init key
@@ -48,6 +48,7 @@ class CHJsonAPI
 
   end
 
+  #TODO accept a key => value hash
   def self.normalise_query(query)
     if !query
       query = ''

@@ -23,7 +23,7 @@ Version 0.1.0:
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'ch_json_api'
+gem 'chjsonapi'
 ```
 
 And then execute:
@@ -32,7 +32,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install ch_json_api
+    $ gem install chjsonapi
 
 ## Usage
 
@@ -41,7 +41,7 @@ Or install it yourself as:
 Add this line to files where the Gem will be used.
 
 ```ruby
-require 'ch_json_api'
+require 'chjsonapi'
 ```
 
 ###Companies House API Key
