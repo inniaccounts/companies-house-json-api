@@ -7,7 +7,7 @@ require_relative 'chjsonapi/company'
 # Can be used to make direct API calls to Companies House domain
 # The extended classes should implement specific methods to interface with api_call by providing the appropriate
 # URL handles, querystrings and request types
-class Chjsonapi
+class ChJsonApi
 
   #Call this before using any other method
   def self.init key

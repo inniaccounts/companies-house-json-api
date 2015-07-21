@@ -1,6 +1,10 @@
-# CHJsonAPI <br> Companies House JSON API Gem
+# ChJsonApi <br> Companies House JSON API Gem
 
 Ruby Gem to help make requests to <a href="https://developer.companieshouse.gov.uk/api/docs/" title="Companies House">Companies House</a> public API.
+
+Version 0.2.2:
+ - Refactoring
+ - Changing gem name
 
 Version 0.2.1:
  - Removing CH Api key
@@ -51,34 +55,34 @@ To use Companies House API, you need to configure an API Key, which you can obta
 Before making any requests, you need to initialise the Gem by calling
 
 ```ruby
-CHJsonAPI.init "YOUR_API_KEY"
+ChJsonApi.init "YOUR_API_KEY"
 ```
 
 ###Querying for <a target="_blank" href="https://developer.companieshouse.gov.uk/api/docs/company/company_number/readCompanyProfile.html" title="Company Profile">Company profile</a>
 
 ```ruby
-json = CHJsonAPI::Company.profile company_number:'COMPANY_NUMBER'
+json = ChJsonApi::Company.profile company_number:'COMPANY_NUMBER'
 puts json['company_number']
 ```
 
 ###Querying for <a target="_blank" href="https://developer.companieshouse.gov.uk/api/docs/company/company_number/registered-office-address/readRegisteredOfficeAddress.html" title="Company Registered Office Address">Company Registered Office Address</a>
 
 ```ruby
-json = CHJsonAPI::Company.registered_office company_number:'COMPANY_NUMBER'
+json = ChJsonApi::Company.registered_office company_number:'COMPANY_NUMBER'
 puts json['locality']
 ```
 
 ###Querying for <a target="_blank" href="https://developer.companieshouse.gov.uk/api/docs/company/company_number/officers/officerList.html" title="Company Officers List">Company Officers List</a>
 
 ```ruby
-json = CHJsonAPI::Company.officers company_number:'COMPANY_NUMBER'
+json = ChJsonApi::Company.officers company_number:'COMPANY_NUMBER'
 puts json['items'][0]['address']['premises']
 ```
 
 Or any of the optional parameters
 
 ```ruby
-json = CHJsonAPI::Company.officers company_number:'COMPANY_NUMBER',items_per_page:X,start_index:X,order_by:'ORDER_BY'
+json = ChJsonApi::Company.officers company_number:'COMPANY_NUMBER',items_per_page:X,start_index:X,order_by:'ORDER_BY'
 puts json['items'][0]['address']['premises']
 ```
 
@@ -86,7 +90,7 @@ puts json['items'][0]['address']['premises']
 ###Querying for a specific <a target="_blank" href="https://developer.companieshouse.gov.uk/api/docs/company/company_number/filing-history/transaction_id/getFilingHistoryItem.html" title="Filing History Item">Filing History Item</a>
 
 ```ruby
-json = CHJsonAPI::Company.filing_item company_number:'COMPANY_NUMBER',items_per_page:X,start_index:X,order_by:'ORDER_BY'
+json = ChJsonApi::Company.filing_item company_number:'COMPANY_NUMBER',items_per_page:X,start_index:X,order_by:'ORDER_BY'
 puts json['transaction_id']
 ```
 
@@ -94,14 +98,14 @@ puts json['transaction_id']
 ###Querying for <a target="_blank" href="https://developer.companieshouse.gov.uk/api/docs/company/company_number/filing-history/getFilingHistoryList.html" title="Filing History List">Filing History</a>
 
 ```ruby
-json = CHJsonAPI::Company.filing_list company_number:'COMPANY_NUMBER',items_per_page:X,start_index:X,order_by:'ORDER_BY'
+json = ChJsonApi::Company.filing_list company_number:'COMPANY_NUMBER',items_per_page:X,start_index:X,order_by:'ORDER_BY'
 puts json['transaction_id']
 ```
 
 Or any of the optional parameters
 
 ```ruby
-json = CHJsonAPI::Company.officers company_number:'COMPANY_NUMBER',items_per_page:X,start_index:X,category:'ORDER_BY'
+json = ChJsonApi::Company.officers company_number:'COMPANY_NUMBER',items_per_page:X,start_index:X,category:'ORDER_BY'
 puts json['transaction_id']
 ```
 

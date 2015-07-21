@@ -5,7 +5,7 @@ require 'chjsonapi/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "chjsonapi"
-  spec.version       = Chjsonapi::VERSION
+  spec.version       = ChJsonApi::VERSION
   spec.authors       = ["Matheus Serpellone"]
   spec.email         = ["m.serpellone@gmail.com"]
 

@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'json'
 
-describe Chjsonapi do
+describe ChJsonApi do
 
   let(:key) {
     f = File.open(File.dirname(__FILE__)+'/../api_key.txt','r')
@@ -11,23 +11,23 @@ describe Chjsonapi do
   }
 
   it 'has a version number' do
-    expect(Chjsonapi::VERSION).not_to be nil
+    expect(ChJsonApi::VERSION).not_to be nil
   end
 
   context 'key_validation' do
 
     it 'should not work if an API key is not passed to the class' do
-      expect{Chjsonapi::Company.profile company_number:'0'}.to raise_error(Exception)
+      expect{ChJsonApi::Company.profile company_number:'0'}.to raise_error(Exception)
     end
 
     it 'should not work if an empty API key is passed to the class' do
-      Chjsonapi.init('')
-      expect{Chjsonapi::Company.profile company_number:'00000006'}.to raise_error(Exception)
+      ChJsonApi.init('')
+      expect{ChJsonApi::Company.profile company_number:'00000006'}.to raise_error(Exception)
     end
 
     it 'should not work if an invalid API key is passed to the class' do
-      Chjsonapi.init('INVALID_KEY')
-      Chjsonapi::Company.profile company_number:'00000006'
+      ChJsonApi.init('INVALID_KEY')
+      ChJsonApi::Company.profile company_number:'00000006'
     end
 
   end
@@ -35,12 +35,12 @@ describe Chjsonapi do
   describe '#api_call' do
 
     before :each do
-      Chjsonapi.init key
+      ChJsonApi.init key
     end
 
     context 'successful' do
       it 'should return a json object' do
-        json = Chjsonapi.api_call('company/00000006', nil)
+        json = ChJsonApi.api_call('company/00000006', nil)
         expect(json).to_not be_nil
       end
 
@@ -51,11 +51,11 @@ describe Chjsonapi do
   describe 'Company#profile' do
 
     before :each do
-      Chjsonapi.init key
+      ChJsonApi.init key
     end
 
     it 'should search for a company and return correct data ' do
-      company = Chjsonapi::Company.profile company_number:'00000006'
+      company = ChJsonApi::Company.profile company_number:'00000006'
 
       expect(company['company_number']).to eq '00000006'
       expect(company['date_of_creation']).to eq '1862-10-25'
@@ -87,12 +87,12 @@ describe Chjsonapi do
     end
 
     it 'should handle injections and invalid data' do
-      expect{Chjsonapi::Company.profile company_number:'00000006/registered-office-address'}.to raise_error(Exception)
-      expect{Chjsonapi::Company.profile company_number:"' ; ls -la"}.to raise_error(Exception)
+      expect{ChJsonApi::Company.profile company_number:'00000006/registered-office-address'}.to raise_error(Exception)
+      expect{ChJsonApi::Company.profile company_number:"' ; ls -la"}.to raise_error(Exception)
     end
 
     it 'should raise an exception if the company number does not exist' do
-      expect{Chjsonapi::Company.profile company_number:'99999999'}.to raise_error(Exception)
+      expect{ChJsonApi::Company.profile company_number:'99999999'}.to raise_error(Exception)
     end
 
   end
@@ -100,11 +100,11 @@ describe Chjsonapi do
   describe 'Company#registered_address' do
 
     before :each do
-      Chjsonapi.init key
+      ChJsonApi.init key
     end
 
     it 'should search for the registered office and return correct data ' do
-      reg_off = Chjsonapi::Company.registered_office company_number:'00000006'
+      reg_off = ChJsonApi::Company.registered_office company_number:'00000006'
 
       expect(reg_off['locality']).to eq 'London'
       expect(reg_off['address_line_2']).to eq '78 Cannon Street'
@@ -114,12 +114,12 @@ describe Chjsonapi do
     end
 
     it 'should handle injections and invalid data' do
-      expect{Chjsonapi::Company.registered_office company_number:'00000006/registered-office-address'}.to raise_error(Exception)
-      expect{Chjsonapi::Company.registered_office company_number:"' ; ls -la"}.to raise_error(Exception)
+      expect{ChJsonApi::Company.registered_office company_number:'00000006/registered-office-address'}.to raise_error(Exception)
+      expect{ChJsonApi::Company.registered_office company_number:"' ; ls -la"}.to raise_error(Exception)
     end
 
     it 'should raise an exception if the company number does not exist' do
-      expect{Chjsonapi::Company.registered_office company_number:'99999999'}.to raise_exception(Exception)
+      expect{ChJsonApi::Company.registered_office company_number:'99999999'}.to raise_exception(Exception)
     end
 
   end
@@ -127,11 +127,11 @@ describe Chjsonapi do
   describe 'Company#officers' do
 
     before :each do
-      Chjsonapi.init key
+      ChJsonApi.init key
     end
 
     it 'should search for the officers and return correct data ' do
-      off = Chjsonapi::Company.officers company_number:'00000006'
+      off = ChJsonApi::Company.officers company_number:'00000006'
 
       expect(off['active_count']).to eq(4)
       expect(off['resigned_count']).to eq(46)
@@ -149,18 +149,18 @@ describe Chjsonapi do
     end
 
     it 'should handle injections and invalid data' do
-      expect{Chjsonapi::Company.officers company_number:'00000006/registered-office-address'}.to raise_error(Exception)
-      expect{Chjsonapi::Company.officers company_number:"' ; ls -la"}.to raise_error(Exception)
+      expect{ChJsonApi::Company.officers company_number:'00000006/registered-office-address'}.to raise_error(Exception)
+      expect{ChJsonApi::Company.officers company_number:"' ; ls -la"}.to raise_error(Exception)
     end
 
     it 'should return an empty object if the company number does not exist' do
-      company = Chjsonapi::Company.officers company_number:'99999999'
+      company = ChJsonApi::Company.officers company_number:'99999999'
       expect(company).to eq({})
     end
 
     it 'should accept items_per_page parameter and use it on the request' do
 
-      off = Chjsonapi::Company.officers company_number: '00000006', items_per_page: 2
+      off = ChJsonApi::Company.officers company_number: '00000006', items_per_page: 2
 
       expect(off).not_to be_nil
       expect(off['items'].count).to eq 2
@@ -170,7 +170,7 @@ describe Chjsonapi do
 
     it 'should accept start_index parameter and use it on the request' do
 
-      off = Chjsonapi::Company.officers company_number: '00000006', start_index: 2
+      off = ChJsonApi::Company.officers company_number: '00000006', start_index: 2
 
       expect(off).not_to be_nil
       expect(off['items'].count).to_not be 0
@@ -180,7 +180,7 @@ describe Chjsonapi do
 
     it 'should accept order_by parameter and use it on the request' do
 
-      off = Chjsonapi::Company.officers company_number: '00000006', order_by: 'appointed_on'
+      off = ChJsonApi::Company.officers company_number: '00000006', order_by: 'appointed_on'
 
       expect(off).not_to be_nil
       expect(off['items'].count).to_not be 0
@@ -189,7 +189,7 @@ describe Chjsonapi do
 
     it 'should accept all parameters and use them on the request' do
 
-      off = Chjsonapi::Company.officers company_number: '00000006', items_per_page: 2, start_index: 2, order_by: 'appointed_on'
+      off = ChJsonApi::Company.officers company_number: '00000006', items_per_page: 2, start_index: 2, order_by: 'appointed_on'
 
       expect(off).not_to be_nil
       expect(off['items'].count).to_not be 0
@@ -204,11 +204,11 @@ describe Chjsonapi do
   describe 'Company#filing_list' do
 
     before :each do
-      Chjsonapi.init key
+      ChJsonApi.init key
     end
 
     it 'should list the filing history of a single company' do
-      off = Chjsonapi::Company.filing_list company_number:'00000006'
+      off = ChJsonApi::Company.filing_list company_number:'00000006'
 
       expect(off).not_to be_nil
       expect(off).not_to eq Hash.new
@@ -217,7 +217,7 @@ describe Chjsonapi do
     end
 
     it 'should accept the category parameter and use it on the query' do
-      off = Chjsonapi::Company.filing_list company_number:'00000006', category: 'address'
+      off = ChJsonApi::Company.filing_list company_number:'00000006', category: 'address'
 
       expect(off).not_to be_nil
       expect(off).not_to eq Hash.new
@@ -227,7 +227,7 @@ describe Chjsonapi do
     end
 
     it 'should accept the category parameter as a comma separated list and use it on the query' do
-      off = Chjsonapi::Company.filing_list company_number:'00000006', category: 'resolution,address'
+      off = ChJsonApi::Company.filing_list company_number:'00000006', category: 'resolution,address'
 
       expect(off).not_to be_nil
       expect(off).not_to eq Hash.new
@@ -237,7 +237,7 @@ describe Chjsonapi do
     end
 
     it 'should accept the items_per_page parameter and use it on the query' do
-      off = Chjsonapi::Company.filing_list company_number:'00000006', items_per_page: 2
+      off = ChJsonApi::Company.filing_list company_number:'00000006', items_per_page: 2
 
       expect(off).not_to be_nil
       expect(off).not_to eq Hash.new
@@ -247,7 +247,7 @@ describe Chjsonapi do
     end
 
     it 'should accept the start_index parameter and use it on the query' do
-      off = Chjsonapi::Company.filing_list company_number:'00000006', start_index: 2
+      off = ChJsonApi::Company.filing_list company_number:'00000006', start_index: 2
 
       expect(off).not_to be_nil
       expect(off).not_to eq Hash.new
@@ -256,7 +256,7 @@ describe Chjsonapi do
     end
 
     it 'should accept all parameters and use them on the query' do
-      off = Chjsonapi::Company.filing_list company_number:'00000006', start_index: 2, items_per_page: 2, category: 'resolution,address'
+      off = ChJsonApi::Company.filing_list company_number:'00000006', start_index: 2, items_per_page: 2, category: 'resolution,address'
 
       expect(off).not_to be_nil
       expect(off).not_to eq Hash.new
@@ -272,7 +272,7 @@ describe Chjsonapi do
 
   describe 'Company#filing_item' do
     it 'should list a specific file of a company' do
-      off = Chjsonapi::Company.filing_item company_number:'00000006', transaction_id: 'MzEyNjIzODI3NmFkaXF6a2N4'
+      off = ChJsonApi::Company.filing_item company_number:'00000006', transaction_id: 'MzEyNjIzODI3NmFkaXF6a2N4'
 
       expect(off).not_to be_nil
       expect(off).not_to eq Hash.new
@@ -280,8 +280,8 @@ describe Chjsonapi do
     end
 
     it 'should handle injections and invalid data' do
-      expect{Chjsonapi::Company.filing_item company_number:'00000006/registered-office-address'}.to raise_error(Exception)
-      expect{Chjsonapi::Company.filing_item company_number:"' ; ls -la"}.to raise_error(Exception)
+      expect{ChJsonApi::Company.filing_item company_number:'00000006/registered-office-address'}.to raise_error(Exception)
+      expect{ChJsonApi::Company.filing_item company_number:"' ; ls -la"}.to raise_error(Exception)
     end
   end
 
