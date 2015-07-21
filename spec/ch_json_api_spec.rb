@@ -14,10 +14,36 @@ describe CHJsonAPI do
     expect(CHJsonAPI::VERSION).not_to be nil
   end
 
-  describe '#key_validation' do
+  context 'key_validation' do
 
     it 'should not work if an API key is not passed to the class' do
       expect{CHJsonAPI::Company.profile company_number:'0'}.to raise_error(Exception)
+    end
+
+    it 'should not work if an empty API key is passed to the class' do
+      CHJsonAPI.init('')
+      expect{CHJsonAPI::Company.profile company_number:'00000006'}.to raise_error(Exception)
+    end
+
+    it 'should not work if an invalid API key is passed to the class' do
+      CHJsonAPI.init('INVALID_KEY')
+      CHJsonAPI::Company.profile company_number:'00000006'
+    end
+
+  end
+
+  describe '#api_call' do
+
+    before :each do
+      CHJsonAPI.init key
+    end
+
+    context 'successful' do
+      it 'should return a json object' do
+        json = CHJsonAPI.api_call('company/00000006', nil)
+        expect(json).to_not be_nil
+      end
+
     end
 
   end
@@ -65,9 +91,8 @@ describe CHJsonAPI do
       expect{CHJsonAPI::Company.profile company_number:"' ; ls -la"}.to raise_error(Exception)
     end
 
-    it 'should return an empty object if the company number does not exist' do
-      company = CHJsonAPI::Company.profile company_number:'99999999'
-      expect(company).to eq({})
+    it 'should raise an exception if the company number does not exist' do
+      expect{CHJsonAPI::Company.profile company_number:'99999999'}.to raise_error(Exception)
     end
 
   end
@@ -93,9 +118,8 @@ describe CHJsonAPI do
       expect{CHJsonAPI::Company.registered_office company_number:"' ; ls -la"}.to raise_error(Exception)
     end
 
-    it 'should return an empty object if the company number does not exist' do
-      company = CHJsonAPI::Company.registered_office company_number:'99999999'
-      expect(company).to eq({})
+    it 'should raise an exception if the company number does not exist' do
+      expect{CHJsonAPI::Company.registered_office company_number:'99999999'}.to raise_exception(Exception)
     end
 
   end
@@ -260,5 +284,6 @@ describe CHJsonAPI do
       expect{CHJsonAPI::Company.filing_item company_number:"' ; ls -la"}.to raise_error(Exception)
     end
   end
+
 
 end

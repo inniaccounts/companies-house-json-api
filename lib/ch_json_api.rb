@@ -3,40 +3,61 @@ require 'curb'
 require 'json'
 require_relative 'ch_json_api/company'
 
+# Base class for the CH Json Api
+# Can be used to make direct API calls to Companies House domain
+# The extended classes should implement specific methods to interface with api_call by providing the appropriate
+# URL handles, querystrings and request types
 class CHJsonAPI
-  # curl -XGET -u KEY: https://api.companieshouse.gov.uk/company/00000006
 
-
+  #Call this before using any other method
   def self.init key
     @key = key
   end
 
 
-  def self.api_call(handler, query, type)
-    raise "Uninitialised API. Call ChJsonApi.init(key) with your Companies House API key before running any requests" if @key == nil || @key.empty?
+  #Calls the Companies House API at the service specified by handler and with the optional parameters provided in query
+  def self.api_call(handler, query)
 
-    if query.nil?
-      query = ''
-    else
-      query = "?#{query.join '&'}"
-    end
+    raise 'Uninitialised API. Call ChJsonApi.init(key) with your Companies House API key before running any requests' if !@key || @key.empty?
 
-    c = Curl::Easy.new("https://api.companieshouse.gov.uk/#{handler}#{query}")
+    query = normalise_query(query)
 
-    c.username = "#{@key}:"
-    c.http_auth_types = :basic
+    result = execute_call(handler, query)
 
-    #p "curl -#{type} -u #{c.username} #{c.url}"
-    c.perform
+    return extract_response(result.body_str)
 
-    json = JSON.parse(c.body_str)
-    if json['errors']
-      {}
-    else
-      json
-    end
   end
 
+  def self.execute_call(handler, query)
+    result = Curl::Easy.new("https://api.companieshouse.gov.uk/#{handler}#{query}")
+
+    result.username        = "#{@key}:"
+    result.http_auth_types = :basic
+
+    result.perform
+    result
+  end
+
+  def self.extract_response(response)
+    return {} if response.empty?
+    json       = JSON.parse(response)
+
+    return json unless json['errors']
+
+    raise json['errors'][0].map { |key, value| "#{key}=>#{value}" }.join(' ')
+
+  end
+
+  def self.normalise_query(query)
+    if !query
+      query = ''
+    elsif query.kind_of? Array
+      query = "?#{query.join '&'}"
+    elsif !query.kind_of? String
+      raise 'Query must be a string or an array with each element being a "key=value" string'
+    end
+    query
+  end
 
 
 end
