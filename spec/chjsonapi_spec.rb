@@ -286,4 +286,21 @@ describe ChJsonApi do
   end
 
 
+  context 'Too Many Requests' do
+
+    before :each do
+      ChJsonApi.init key
+    end
+
+    describe '#api_call' do
+      it 'should throw exception when reaching too many requests' do
+
+        allow_any_instance_of(Curl::Easy).to receive(:response_code).and_return(429)
+
+        expect {ChJsonApi::Company.profile company_number: '00000006'}.to raise_error /too/i
+
+      end
+    end
+  end
+
 end

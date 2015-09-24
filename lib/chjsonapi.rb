@@ -35,6 +35,9 @@ class ChJsonApi
     result.http_auth_types = :basic
 
     result.perform
+
+    raise 'Too Many Requests' if result.response_code == 429
+
     result
   end
 
