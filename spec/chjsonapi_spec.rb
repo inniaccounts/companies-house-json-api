@@ -65,7 +65,7 @@ describe ChJsonApi do
       expect(company['company_name']).to eq 'MARINE AND GENERAL MUTUAL LIFE ASSURANCE SOCIETY'
       expect(company['registered_office_address']['locality']).to eq 'London'
       expect(company['registered_office_address']['address_line_2']).to eq '78 Cannon Street'
-      expect(company['registered_office_address']['care_of_name']).to eq 'CMS CAMERON MCKENNA LLP'
+      #expect(company['registered_office_address']['care_of_name']).to eq 'CMS CAMERON MCKENNA LLP'
       expect(company['registered_office_address']['country']).to eq 'United Kingdom'
       expect(company['registered_office_address']['address_line_1']).to eq 'Cms Cameron Mckenna Llp Cannon Place, 78 Cannon St Cannon Place'
       expect(company['registered_office_address']['postal_code']).to eq 'EC4N 6AF'
@@ -297,7 +297,7 @@ describe ChJsonApi do
 
         allow_any_instance_of(Curl::Easy).to receive(:response_code).and_return(429)
 
-        expect {ChJsonApi::Company.profile company_number: '00000006'}.to raise_error /too/i
+        expect {ChJsonApi::Company.profile company_number: '00000006'}.to raise_error RuntimeError, /too/i
 
       end
     end

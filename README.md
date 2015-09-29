@@ -2,6 +2,9 @@
 
 Ruby Gem to help make requests to <a href="https://developer.companieshouse.gov.uk/api/docs/" title="Companies House">Companies House</a> public API.
 
+Version 0.3.1
+ - Changing exception thrown on Too Many Requests
+
 Version 0.3.0
  - Handling "Too Many Requests" message (CH says that happens when 600 requests are sent in 5 minutes. Then the next requests have the HTTP status header of 429 Too Many Requests)
 

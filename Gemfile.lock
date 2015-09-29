@@ -1,0 +1,39 @@
+PATH
+  remote: .
+  specs:
+    chjsonapi (0.3.0)
+      curb (~> 0.8)
+      json (~> 1.8)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    curb (0.8.8)
+    diff-lcs (1.2.5)
+    json (1.8.3)
+    rake (10.4.2)
+    rspec (3.3.0)
+      rspec-core (~> 3.3.0)
+      rspec-expectations (~> 3.3.0)
+      rspec-mocks (~> 3.3.0)
+    rspec-core (3.3.1)
+      rspec-support (~> 3.3.0)
+    rspec-expectations (3.3.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.3.0)
+    rspec-mocks (3.3.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.3.0)
+    rspec-support (3.3.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 1.10)
+  chjsonapi!
+  rake (~> 10.0)
+  rspec (~> 3.3)
+
+BUNDLED WITH
+   1.10.5

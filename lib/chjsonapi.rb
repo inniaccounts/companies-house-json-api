@@ -36,7 +36,7 @@ class ChJsonApi
 
     result.perform
 
-    raise 'Too Many Requests' if result.response_code == 429
+    raise RuntimeError.new({message: 'Too Many Requests', request: result}) if result.response_code == 429
 
     result
   end
