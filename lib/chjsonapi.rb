@@ -31,12 +31,13 @@ class ChJsonApi
   def self.execute_call(handler, query)
     result = Curl::Easy.new("https://api.companieshouse.gov.uk/#{handler}#{query}")
 
-    result.username        = "#{@key}:"
+    result.username        = "#{choose_key}:"
     result.http_auth_types = :basic
 
     result.perform
 
     raise RuntimeError.new({message: 'Too Many Requests', request: result}) if result.response_code == 429
+    raise RuntimeError.new({message: 'Unauthorized. Please check your API keys.', request: result}) if result.response_code == 401
 
     result
   end
@@ -61,6 +62,20 @@ class ChJsonApi
       raise 'Query must be a string or an array with each element being a "key=value" string'
     end
     query
+  end
+
+
+  private
+  def self.choose_key
+    if @key.is_a? Array
+      #Initialise index with 0, or use it as it is
+      @index ||= 0
+      @key[@index % @key.count]
+    elsif @key.is_a? String
+      @key
+    else
+      raise 'Key is not a recognised format. Use a String or an Array of Strings.'
+    end
   end
 
 
