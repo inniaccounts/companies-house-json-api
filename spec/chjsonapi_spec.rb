@@ -22,22 +22,22 @@ describe ChJsonApi do
 
     it 'does not work if an empty API key is passed to the class' do
       ChJsonApi.init('')
-      expect{ChJsonApi::Company.profile company_number:'00000006'}.to raise_error(Exception)
+      expect{ChJsonApi::Company.profile company_number:'00000006'}.to raise_error(RuntimeError)
     end
 
     it 'does not work if an invalid API key is passed to the class' do
       ChJsonApi.init('INVALID_KEY')
-      expect {ChJsonApi::Company.profile company_number:'00000006'}.to_not raise_error(Exception)
+      expect {ChJsonApi::Company.profile company_number:'00000006'}.to raise_error(RuntimeError)
     end
 
     it 'does work with an array' do
       ChJsonApi.init([key])
-      expect {ChJsonApi::Company.profile company_number:'00000006'}.to_not raise_error(Exception)
+      expect {ChJsonApi::Company.profile company_number:'00000006'}.to_not raise_error
     end
 
     it 'does work with a string' do
       ChJsonApi.init(key)
-      expect {ChJsonApi::Company.profile company_number:'00000006'}.to_not raise_error(Exception)
+      expect {ChJsonApi::Company.profile company_number:'00000006'}.to_not raise_error
     end
 
   end
@@ -75,7 +75,6 @@ describe ChJsonApi do
       expect(company['company_name']).to eq 'MARINE AND GENERAL MUTUAL LIFE ASSURANCE SOCIETY'
       expect(company['registered_office_address']['locality']).to eq 'London'
       expect(company['registered_office_address']['address_line_2']).to eq '78 Cannon Street'
-      #expect(company['registered_office_address']['care_of_name']).to eq 'CMS CAMERON MCKENNA LLP'
       expect(company['registered_office_address']['country']).to eq 'United Kingdom'
       expect(company['registered_office_address']['address_line_1']).to eq 'Cms Cameron Mckenna Llp Cannon Place, 78 Cannon St Cannon Place'
       expect(company['registered_office_address']['postal_code']).to eq 'EC4N 6AF'
@@ -298,19 +297,31 @@ describe ChJsonApi do
 
   context 'Too Many Requests' do
 
-    before :each do
-      ChJsonApi.init key
-    end
 
     describe '#api_call' do
       it 'throws exception when reaching too many requests' do
 
+        ChJsonApi.init key
+
         allow_any_instance_of(Curl::Easy).to receive(:response_code).and_return(429)
 
-        expect {ChJsonApi::Company.profile company_number: '00000006'}.to raise_error RuntimeError, /too/i
+        expect {ChJsonApi::Company.profile company_number: '00000006'}.to raise_error RuntimeError, /too many/i
 
       end
+
+      it 'works if first key is exhausted but second one is not' do
+        ChJsonApi.init([key+'too_many_requests', key+'too_many_requests', key])
+        expect {ChJsonApi::Company.profile company_number: '00000006'}.to_not raise_error Exception
+      end
+
+      it 'throws exception if no keys are suitable' do
+        allow_any_instance_of(Curl::Easy).to receive(:response_code).and_return(429)
+
+        ChJsonApi.init([key+'too_many_requests', key + 'too_many'])
+        expect {ChJsonApi::Company.profile company_number: '00000006'}.to raise_error RuntimeError, /too many/i
+      end
     end
+
   end
 
 end
