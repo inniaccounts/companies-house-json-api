@@ -30,7 +30,15 @@ describe ChJsonApi do
       expect {ChJsonApi::Company.profile company_number:'00000006'}.to_not raise_error(Exception)
     end
 
-    it ''
+    it 'does work with an array' do
+      ChJsonApi.init([key])
+      expect {ChJsonApi::Company.profile company_number:'00000006'}.to_not raise_error(Exception)
+    end
+
+    it 'does work with a string' do
+      ChJsonApi.init(key)
+      expect {ChJsonApi::Company.profile company_number:'00000006'}.to_not raise_error(Exception)
+    end
 
   end
 
