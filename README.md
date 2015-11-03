@@ -2,6 +2,9 @@
 
 Ruby Gem to help make requests to <a href="https://developer.companieshouse.gov.uk/api/docs/" title="Companies House">Companies House</a> public API.
 
+Version 0.3.2
+ - Adding support for multiple keys.
+ 
 Version 0.3.1
  - Changing exception thrown on Too Many Requests
 
@@ -62,6 +65,12 @@ Before making any requests, you need to initialise the Gem by calling
 
 ```ruby
 ChJsonApi.init "YOUR_API_KEY"
+```
+
+Or, if you have more than one key available, you can initialise the Gem with an array of keys by calling
+
+```ruby
+ChJsonApi.init ["FIRST_KEY", "SECOND_KEY", ... , "LAST_KEY"]
 ```
 
 ###Querying for <a target="_blank" href="https://developer.companieshouse.gov.uk/api/docs/company/company_number/readCompanyProfile.html" title="Company Profile">Company profile</a>
