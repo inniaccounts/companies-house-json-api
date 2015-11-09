@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    chjsonapi (0.3.1)
+    chjsonapi (0.3.2)
       curb (~> 0.8)
       json (~> 1.8)
 
@@ -36,4 +36,4 @@ DEPENDENCIES
   rspec (~> 3.3)
 
 BUNDLED WITH
-   1.10.5
+   1.10.6

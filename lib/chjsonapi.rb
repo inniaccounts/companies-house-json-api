@@ -9,6 +9,8 @@ require_relative 'chjsonapi/company'
 # URL handles, querystrings and request types
 class ChJsonApi
 
+
+
   #Call this before using any other method
   def self.init(key)
     if key.is_a? Array
@@ -39,28 +41,33 @@ class ChJsonApi
   end
 
   def self.execute_call(handler, query)
-    result = Curl::Easy.new("https://api.companieshouse.gov.uk/#{handler}#{query}")
+    @result ||= Curl::Easy.new
 
-    result.username        = "#{choose_key}:"
-    result.http_auth_types = :basic
+    @result.url = "https://api.companieshouse.gov.uk/#{handler}#{query}"
 
-    result.perform
+    @result.username        = "#{choose_key}:"
+    @result.http_auth_types = :basic
 
-    code = result.response_code
+    @result.perform
+
+    code = @result.response_code
 
     #Detect any errors.
     #If found, treat them and retry the function
     #This will
     if code == 401
-      handle_invalid_key(result)
-      result = execute_call(handler, query)
+      handle_invalid_key(@result)
+      @result = execute_call(handler, query)
     end
 
     if code == 429
-      handle_too_many_requests(result)
-      result = execute_call(handler, query)
+      handle_too_many_requests(@result)
+      @result = execute_call(handler, query)
     end
-    result
+
+    ##All ok, reset the "tries" counter and return the result
+    @tries = 0
+    @result
   end
 
   def self.extract_response(response)

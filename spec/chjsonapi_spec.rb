@@ -286,6 +286,7 @@ describe ChJsonApi do
       expect(off).not_to be_nil
       expect(off).not_to eq Hash.new
       expect(off['transaction_id']).to eq 'MzEyNjIzODI3NmFkaXF6a2N4'
+
     end
 
     it 'handles injections and invalid data' do
