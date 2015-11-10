@@ -13,24 +13,8 @@ Version 0.3.1
 Version 0.3.0
  - Handling "Too Many Requests" message (CH says that happens when 600 requests are sent in 5 minutes. Then the next requests have the HTTP status header of 429 Too Many Requests)
 
-Version 0.2.2:
- - Refactoring
- - Changing gem name
-
-Version 0.2.1:
- - Removing CH Api key
- - Changing version on Gemspec file
-
-Version 0.2.0:
- - Changed basic API. No longer accepts a single String as parameter. A named hash must always be provided to the functions.
- - Added optional parameters to the officers request.
- - Created Company Filing
- 
-
-Version 0.1.0:
- - Created Company profile API call
- - Created Company registered office API call
- - Created Company officers API call
+## API
+Companies House JSON API is still in beta, which means that it might eventually change. Until a stable version is launched, this gem is considered on "version 0." 
 
 
 ## Installation
