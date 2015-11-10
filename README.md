@@ -2,6 +2,8 @@
 
 Ruby Gem to help make requests to <a href="https://developer.companieshouse.gov.uk/api/docs/" title="Companies House">Companies House</a> public API.
 
+[![Gem Version](https://badge.fury.io/rb/chjsonapi.svg)](https://badge.fury.io/rb/chjsonapi)
+
 Version 0.3.2
  - Adding support for multiple keys.
  
@@ -134,3 +136,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+
