@@ -310,8 +310,8 @@ describe ChJsonApi do
 
       end
 
-      it 'works if first key is exhausted but second one is not' do
-        ChJsonApi.init([key+'too_many_requests', key+'too_many_requests', key])
+      it 'works if first keys are exhausted but other ones are not' do
+        ChJsonApi.init([key+'too_many_requests_1', key+'too_many_requests_2', key])
         expect {ChJsonApi::Company.profile company_number: '00000006'}.to_not raise_error Exception
       end
 
